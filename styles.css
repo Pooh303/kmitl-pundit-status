@@ -10,6 +10,7 @@ body {
     color: #333;
     line-height: 1.6;
     padding: 20px;
+    overflow-y: scroll;
 }
 
 .container {
@@ -189,6 +190,12 @@ tr:hover {
 
 .summary-success {
     background: linear-gradient(135deg, #66bb6a, #2e7d32);
+    color: white;
+}
+
+
+.summary-all {
+    background: linear-gradient(135deg, #78909c, #455a64);
     color: white;
 }
 

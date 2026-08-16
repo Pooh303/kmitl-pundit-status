@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             studentData = data;
             
+            let countAll = 0;
             let countNotRegistered = 0;
             let countUnpaid = 0;
             let countSuccess = 0;
@@ -30,6 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
+            countAll = studentData.length;
+
+            document.getElementById('count-all').textContent = countAll;
             document.getElementById('count-not-registered').textContent = countNotRegistered;
             document.getElementById('count-unpaid').textContent = countUnpaid;
             document.getElementById('count-success').textContent = countSuccess;
@@ -86,11 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Search and Filter functionality
-    let currentFilter = null;
+    let currentFilter = 'all';
 
     window.setFilter = function(filterType) {
         if (currentFilter === filterType) {
-            currentFilter = null; // Toggle off if clicked again
+            currentFilter = 'all'; // Toggle off to show all
         } else {
             currentFilter = filterType;
         }
@@ -123,6 +127,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 student.status !== '-' && 
                                 !student.status.includes('ยังไม่ขึ้นทะเบียน') && 
                                 !student.status.includes('ยังไม่ชำระเงิน');
+            } else if (currentFilter === 'all') {
+                matchesStatus = true;
             }
             
             return matchesSearch && matchesStatus;

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สถานะการขึ้นทะเบียนบัณฑิต</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
@@ -15,6 +16,10 @@
         </header>
 
         <div class="summary-container">
+            <div class="summary-capsule summary-all active" onclick="setFilter('all')" id="cap-all">
+                <span class="summary-label">ทั้งหมด</span>
+                <span class="summary-value" id="count-all">0</span>
+            </div>
             <div class="summary-capsule summary-not-registered" onclick="setFilter('not-registered')" id="cap-not-registered">
                 <span class="summary-label">ยังไม่ขึ้นทะเบียน</span>
                 <span class="summary-value" id="count-not-registered">0</span>
