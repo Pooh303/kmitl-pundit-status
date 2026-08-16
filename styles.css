@@ -27,6 +27,28 @@ header {
     margin-bottom: 30px;
 }
 
+.cta-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #e65100, #ff9800);
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(230, 81, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(230, 81, 0, 0.3);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
 h1 {
     color: #e65100;
     margin-bottom: 10px;

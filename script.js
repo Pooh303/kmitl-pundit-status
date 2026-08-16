@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `
                 <td>${student.id}</td>
                 <td>${student.name}</td>
+                <td>${student.major || '-'}</td>
                 <td class="${statusClass}">${student.status}</td>
             `;
             tableBody.appendChild(tr);
