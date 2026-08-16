@@ -16,7 +16,7 @@ def scrape_students(start_id, end_id, prefix="65070"):
         # Initial GET to fetch the first token
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
         resp = opener.open(req)
-        html = resp.read().decode('windows-874', errors='ignore')
+        html = resp.read().decode('cp874', errors='ignore')
         
         results = []
         
@@ -30,10 +30,10 @@ def scrape_students(start_id, end_id, prefix="65070"):
                 
             token = token_match.group(1)
             
-            data = urllib.parse.urlencode({'student_id': student_id, 'token': token, 'Submit': 'แสดงข้อมูล'}).encode('windows-874', errors='ignore')
+            data = urllib.parse.urlencode({'student_id': student_id, 'token': token, 'Submit': 'แสดงข้อมูล'}).encode('cp874', errors='ignore')
             req_post = urllib.request.Request(url, data=data, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
             resp = opener.open(req_post)
-            html = resp.read().decode('windows-874', errors='ignore')
+            html = resp.read().decode('cp874', errors='ignore')
             
             soup = BeautifulSoup(html, 'html.parser')
             td_info = soup.find(id='td_info')
