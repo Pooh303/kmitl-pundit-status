@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สถานะการขึ้นทะเบียนบัณฑิต</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ตรวจสอบสถานะขึ้นทะเบียนบัณฑิต</h1>
+            <p>อัปเดตข้อมูลล่าสุด: <span id="last-updated">กำลังโหลด...</span></p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ค้นหาจากรหัสนักศึกษา หรือ ชื่อ-นามสกุล...">
+        </div>
+
+        <div class="table-container">
+            <table id="statusTable">
+                <thead>
+                    <tr>
+                        <th>รหัสนักศึกษา</th>
+                        <th>ชื่อ - นามสกุล</th>
+                        <th>สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="3" class="loading">กำลังโหลดข้อมูล...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
