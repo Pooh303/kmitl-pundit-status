@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">ไม่สามารถโหลดข้อมูลได้ (หากเพิ่งสร้างเว็บ ต้องรอ GitHub Actions รันรอบแรกก่อน)</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="4" class="empty-message error-message">ไม่สามารถโหลดข้อมูลได้ (หากเพิ่งสร้างเว็บ ต้องรอ GitHub Actions รันรอบแรกก่อน)</td></tr>`;
         });
 
     // Render table
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
         
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">ไม่พบข้อมูล</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="4" class="empty-message">ไม่พบข้อมูล</td></tr>`;
             return;
         }
 
@@ -84,9 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusClass = 'status-success';
             }
 
+            const cleanName = student.name.replace(/&nbsp;/g, ' ').replace(/\u00A0/g, ' ').replace(/\s+/g, ' ');
+
             tr.innerHTML = `
                 <td data-label="รหัสนักศึกษา">${student.id}</td>
-                <td data-label="ชื่อ-สกุล">${student.name}</td>
+                <td data-label="ชื่อ-สกุล">${cleanName}</td>
                 <td data-label="สาขา">${student.major || '-'}</td>
                 <td data-label="สถานะ" class="${statusClass}">${statusHtml}</td>
             `;
@@ -112,6 +114,53 @@ document.addEventListener('DOMContentLoaded', () => {
         
         applyFilters();
     };
+
+    
+    const pinBtn = document.getElementById('pinBtn');
+    const topSection = document.getElementById('topSection');
+    
+    pinBtn.addEventListener('click', () => {
+        if (topSection.classList.contains('sticky-active')) {
+            // Unpinning
+            pinBtn.classList.remove('active');
+            pinBtn.title = 'ปักหมุดแถบนี้ไว้ด้านบน';
+            
+            // Only play animation if scrolled down significantly
+            if (window.scrollY > 250) {
+                topSection.classList.add('unpinning');
+                setTimeout(() => {
+                    topSection.classList.remove('sticky-active');
+                    topSection.classList.remove('unpinning');
+                }, 300);
+            } else {
+                // Remove instantly if near top
+                topSection.classList.remove('sticky-active');
+            }
+        } else {
+            // Pinning instantly
+            topSection.classList.add('sticky-active');
+            pinBtn.classList.add('active');
+            pinBtn.title = 'ยกเลิกการปักหมุด';
+        }
+    });
+
+    const clearBtn = document.getElementById('clearSearchBtn');
+    
+    searchInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            clearBtn.style.display = 'block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+        applyFilters();
+    });
+
+    clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        this.style.display = 'none';
+        applyFilters();
+        searchInput.focus();
+    });
 
     function applyFilters() {
         const searchTerm = searchInput.value.toLowerCase();
@@ -155,8 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable(filteredData);
     }
 
-    searchInput.addEventListener('input', applyFilters);
-
     // Sorting functionality
     let currentSortColumn = 'id';
     let currentSortDirection = 'asc';
@@ -183,6 +230,24 @@ document.addEventListener('DOMContentLoaded', () => {
             header.querySelector('span').textContent = currentSortDirection === 'asc' ? '↑' : '↓';
 
             applyFilters();
+        });
+    });
+
+    // Scroll to Top functionality
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add('show');
+        } else {
+            scrollTopBtn.classList.remove('show');
+        }
+    });
+    
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
     });
 });
