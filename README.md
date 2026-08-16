@@ -1,5 +1,7 @@
 # 🎓 KMITL Pundit Status Checker
 
+**🌐 Live Demo:** [https://pooh303.github.io/kmitl-pundit-status/](https://pooh303.github.io/kmitl-pundit-status/)
+
 A completely **serverless, static website** that tracks and displays the graduation registration status for students at King Mongkut's Institute of Technology Ladkrabang (KMITL). 
 
 By leveraging **GitHub Actions**, this project automatically scrapes data from the official university portal at scheduled intervals, eliminating the need for a dedicated backend server or database! 🚀
