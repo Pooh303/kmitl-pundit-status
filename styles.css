@@ -308,12 +308,13 @@ tr:hover {
 .summary-capsule {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center;
+    justify-content: flex-end; /* จัดตัวเลข(ซึ่งอยู่ล่างสุดใน DOM) ไปชิดซ้าย */
     align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
+    gap: 12px;
+    padding: 8px 20px 8px 10px; /* ลด padding ซ้ายให้วงกลมชิดขอบมากขึ้น */
     border-radius: 50px;
     font-weight: 600;
+    min-width: 190px; /* ล็อคความกว้างขั้นต่ำให้ปุ่มเท่าๆ กัน */
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
@@ -342,14 +343,21 @@ tr:hover {
 .summary-label {
     margin: 0;
     font-size: 15px;
+    flex: 1;
+    text-align: left; /* จัดข้อความชิดซ้ายต่อจากตัวเลข */
 }
 
 .summary-value {
     background: rgba(255,255,255,0.9);
     color: #333;
-    padding: 4px 12px;
+    padding: 0 10px;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 20px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
 }
 
@@ -486,6 +494,7 @@ tr:hover {
     
     .summary-capsule {
         width: 100%;
+        min-width: 0; /* Override desktop min-width to prevent overflow */
         flex-direction: row-reverse;
         justify-content: flex-end;
         align-items: center;

@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tr.innerHTML = `
                 <td data-label="รหัสนักศึกษา">${student.id}</td>
-                <td data-label="ชื่อ-สกุล">${cleanName}</td>
+                <td data-label="ชื่อ">${cleanName}</td>
                 <td data-label="สาขา">${student.major || '-'}</td>
                 <td data-label="สถานะ" class="${statusClass}">${statusHtml}</td>
             `;

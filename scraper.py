@@ -34,23 +34,8 @@ def mask_name(full_name):
             return parts[0][:3] + '***'
         return parts[0]
         
-    first_name = parts[0]
-    last_name = ' '.join(parts[1:])
-    
-    # นับเฉพาะตัวอักษรที่ไม่ใช่ช่องว่าง 3 ตัวแรกของนามสกุล
-    chars_kept = 0
-    masked_last = ""
-    for char in last_name:
-        if chars_kept < 3:
-            masked_last += char
-            if char.strip():
-                chars_kept += 1
-        else:
-            break
-            
-    masked_last += '***'
-    
-    return f"{first_name} {masked_last}"
+    # คืนค่าเฉพาะชื่อจริง (คำแรก) ตัดนามสกุลทิ้งทั้งหมด
+    return parts[0]
 
 def scrape_students():
     url = 'https://www1.reg.kmitl.ac.th/gradapundit/pundit_status_show.php'
