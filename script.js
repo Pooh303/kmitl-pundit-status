@@ -15,6 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             studentData = data;
+            
+            let countNotRegistered = 0;
+            let countUnpaid = 0;
+            let countSuccess = 0;
+
+            studentData.forEach(student => {
+                if (student.status.includes('ยังไม่ขึ้นทะเบียน')) {
+                    countNotRegistered++;
+                } else if (student.status.includes('ยังไม่ชำระเงิน')) {
+                    countUnpaid++;
+                } else if (!student.status.includes('ไม่พบข้อมูล') && student.status !== '-') {
+                    countSuccess++;
+                }
+            });
+
+            document.getElementById('count-not-registered').textContent = countNotRegistered;
+            document.getElementById('count-unpaid').textContent = countUnpaid;
+            document.getElementById('count-success').textContent = countSuccess;
+
             renderTable(studentData);
             
             // Try to get last modified date of the file if possible
@@ -49,10 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
             let statusClass = '';
             if (student.status.includes('ยังไม่ขึ้นทะเบียน')) {
                 statusClass = 'status-not-registered';
-            } else if (student.status.includes('ไม่พบข้อมูล')) {
+            } else if (student.status.includes('ยังไม่ชำระเงิน')) {
+                statusClass = 'status-unpaid';
+            } else if (student.status.includes('ไม่พบข้อมูล') || student.status === '-') {
                 statusClass = 'status-not-found';
             } else {
-                statusClass = 'status-registered'; // For 'ขึ้นทะเบียนแล้ว...' etc.
+                statusClass = 'status-success';
             }
 
             tr.innerHTML = `
@@ -64,15 +85,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Search functionality
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+    // Search and Filter functionality
+    let currentFilter = null;
+
+    window.setFilter = function(filterType) {
+        if (currentFilter === filterType) {
+            currentFilter = null; // Toggle off if clicked again
+        } else {
+            currentFilter = filterType;
+        }
+        
+        // Update active classes on capsules
+        document.querySelectorAll('.summary-capsule').forEach(el => el.classList.remove('active'));
+        if (currentFilter) {
+            document.getElementById('cap-' + currentFilter).classList.add('active');
+        }
+        
+        applyFilters();
+    };
+
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase();
         
         const filteredData = studentData.filter(student => {
-            return student.id.toLowerCase().includes(searchTerm) || 
-                   student.name.toLowerCase().includes(searchTerm);
+            // Check Search
+            const matchesSearch = student.id.toLowerCase().includes(searchTerm) || 
+                                  student.name.toLowerCase().includes(searchTerm);
+            
+            // Check Filter status
+            let matchesStatus = true;
+            if (currentFilter === 'not-registered') {
+                matchesStatus = student.status.includes('ยังไม่ขึ้นทะเบียน');
+            } else if (currentFilter === 'unpaid') {
+                matchesStatus = student.status.includes('ยังไม่ชำระเงิน');
+            } else if (currentFilter === 'success') {
+                matchesStatus = !student.status.includes('ไม่พบข้อมูล') && 
+                                student.status !== '-' && 
+                                !student.status.includes('ยังไม่ขึ้นทะเบียน') && 
+                                !student.status.includes('ยังไม่ชำระเงิน');
+            }
+            
+            return matchesSearch && matchesStatus;
         });
         
         renderTable(filteredData);
-    });
+    }
+
+    searchInput.addEventListener('input', applyFilters);
 });

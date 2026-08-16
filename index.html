@@ -14,6 +14,21 @@
             <p>อัปเดตข้อมูลล่าสุด: <span id="last-updated">กำลังโหลด...</span></p>
         </header>
 
+        <div class="summary-container">
+            <div class="summary-capsule summary-not-registered" onclick="setFilter('not-registered')" id="cap-not-registered">
+                <span class="summary-label">ยังไม่ขึ้นทะเบียน</span>
+                <span class="summary-value" id="count-not-registered">0</span>
+            </div>
+            <div class="summary-capsule summary-unpaid" onclick="setFilter('unpaid')" id="cap-unpaid">
+                <span class="summary-label">รอชำระเงิน</span>
+                <span class="summary-value" id="count-unpaid">0</span>
+            </div>
+            <div class="summary-capsule summary-success" onclick="setFilter('success')" id="cap-success">
+                <span class="summary-label">ขึ้นทะเบียนสำเร็จ</span>
+                <span class="summary-value" id="count-success">0</span>
+            </div>
+        </div>
+
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="ค้นหาจากรหัสนักศึกษา หรือ ชื่อ-นามสกุล...">
         </div>

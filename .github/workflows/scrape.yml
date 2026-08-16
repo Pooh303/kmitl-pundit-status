@@ -2,8 +2,8 @@ name: Scrape Student Status
 
 on:
   schedule:
-    # Run every 6 hours (at minute 0 past every 6th hour)
-    - cron: '0 */6 * * *'
+    # Run every 20 minutes
+    - cron: '*/20 * * * *'
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
