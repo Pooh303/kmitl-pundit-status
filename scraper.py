@@ -14,7 +14,8 @@ def scrape_students(start_id, end_id, prefix="65070"):
 
     try:
         # Initial GET to fetch the first token
-        resp = opener.open(url)
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
+        resp = opener.open(req)
         html = resp.read().decode('windows-874', errors='ignore')
         
         results = []
@@ -30,7 +31,8 @@ def scrape_students(start_id, end_id, prefix="65070"):
             token = token_match.group(1)
             
             data = urllib.parse.urlencode({'student_id': student_id, 'token': token, 'Submit': 'แสดงข้อมูล'}).encode('windows-874', errors='ignore')
-            resp = opener.open(url, data=data)
+            req_post = urllib.request.Request(url, data=data, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
+            resp = opener.open(req_post)
             html = resp.read().decode('windows-874', errors='ignore')
             
             soup = BeautifulSoup(html, 'html.parser')
@@ -77,7 +79,10 @@ if __name__ == "__main__":
     # Adjust range as needed
     results = scrape_students(1, 300, "65070")
     
-    with open('data.json', 'w', encoding='utf-8') as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
-            
-    print("Done! Results saved to data.json")
+    if len(results) > 0:
+        with open('data.json', 'w', encoding='utf-8') as f:
+            json.dump(results, f, ensure_ascii=False, indent=2)
+        print("Done! Results saved to data.json")
+    else:
+        print("No results fetched (Possible block or error). data.json was NOT overwritten.")
+        sys.exit(1)
