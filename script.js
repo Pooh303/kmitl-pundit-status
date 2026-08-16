@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('tableBody');
     const searchInput = document.getElementById('searchInput');
-    const lastUpdated = document.getElementById('lastUpdated');
     
     let studentData = [];
 
@@ -223,11 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update UI
             document.querySelectorAll('.sortable').forEach(h => {
                 h.classList.remove('asc', 'desc');
-                h.querySelector('span').textContent = '↕';
+                h.querySelector('span').textContent = '=';
             });
             
             header.classList.add(currentSortDirection);
-            header.querySelector('span').textContent = currentSortDirection === 'asc' ? '↑' : '↓';
+            header.querySelector('span').textContent = currentSortDirection === 'asc' ? '^' : 'v';
 
             applyFilters();
         });

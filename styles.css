@@ -30,6 +30,9 @@ th.sortable span {
     font-size: 12px;
     margin-left: 5px;
     color: #999;
+    display: inline-block;
+    width: 14px;
+    text-align: center;
 }
 
 th.sortable.asc span {
@@ -337,7 +340,6 @@ tr:hover {
 
 /* Scroll to Top Button */
 #scrollTopBtn {
-    display: none;
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -375,6 +377,11 @@ tr:hover {
     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
 
+.summary-all {
+    background: linear-gradient(135deg, #78909c, #455a64);
+    color: white;
+}
+
 @media (max-width: 600px) {
     #scrollTopBtn {
         bottom: 20px;
@@ -383,16 +390,7 @@ tr:hover {
         height: 45px;
         font-size: 20px;
     }
-}
 
-
-.summary-all {
-    background: linear-gradient(135deg, #78909c, #455a64);
-    color: white;
-}
-
-
-@media (max-width: 600px) {
     .mobile-break {
         display: block;
     }
@@ -497,6 +495,7 @@ tr:hover {
         font-size: 13px;
         margin: 0;
         border-bottom: 1px solid #ddd;
+        white-space: nowrap;
     }
 
     th:not(.sortable) {
