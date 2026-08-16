@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let studentData = [];
 
-    // Fetch JSON data
-    fetch('data.json')
+    // Fetch JSON data with cache busting
+    const timestamp = new Date().getTime();
+    fetch('data.json?t=' + timestamp)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTable(studentData);
             
             // Try to get last modified date of the file if possible
-            fetch('data.json', { method: 'HEAD' })
+            fetch('data.json?t=' + timestamp, { method: 'HEAD' })
                 .then(res => {
                     const lastMod = res.headers.get('Last-Modified');
                     if (lastMod) {
