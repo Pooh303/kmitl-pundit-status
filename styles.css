@@ -5,6 +5,40 @@
     font-family: 'Prompt', sans-serif;
 }
 
+th {
+    background-color: #f8f9fa;
+    color: #444;
+    font-weight: 600;
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid #ddd;
+    position: relative;
+}
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+th.sortable:hover {
+    background-color: #e9ecef;
+}
+
+th.sortable span {
+    font-size: 12px;
+    margin-left: 5px;
+    color: #999;
+}
+
+th.sortable.asc span {
+    color: #e65100;
+}
+
+th.sortable.desc span {
+    color: #e65100;
+}
+
 body {
     background-color: #f4f7f6;
     color: #333;
@@ -88,11 +122,6 @@ th, td {
     border-bottom: 1px solid #ddd;
 }
 
-th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    color: #444;
-}
 
 tr:hover {
     background-color: #f1f1f1;

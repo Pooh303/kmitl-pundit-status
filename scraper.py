@@ -71,11 +71,11 @@ def scrape_students():
                 # Row 0 is header: ลำดับ | รหัสนักศึกษา | ชื่อ - นามสกุล | หลักสูตร/สาขา | สถานะ
                 for row in rows[1:]:
                     cols = [c.text.strip() for c in row.find_all(['td', 'th'])]
-                    if len(cols) >= 5:
+                    if len(cols) >= 6:
                         student_id = cols[1]
                         name = cols[2]
-                        major = cols[3]
-                        status = cols[4]
+                        major = cols[4]  # Column 3 is the degree (Bachelor of Science)
+                        status = cols[5]
                         
                         # Only include students from IT faculty (prefix 6407 or 6507, etc)
                         # Actually we can just include everyone returned in this list.
@@ -88,6 +88,8 @@ def scrape_students():
                             })
                 break
                 
+        # Sort results by student ID
+        results.sort(key=lambda x: x['id'])
         return results
             
     except Exception as e:

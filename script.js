@@ -135,9 +135,51 @@ document.addEventListener('DOMContentLoaded', () => {
             
             return matchesSearch && matchesStatus;
         });
+
+        // Apply Sorting
+        if (currentSortColumn) {
+            filteredData.sort((a, b) => {
+                let valA = a[currentSortColumn] || '';
+                let valB = b[currentSortColumn] || '';
+                
+                // Thai string comparison
+                let comparison = valA.localeCompare(valB, 'th');
+                
+                return currentSortDirection === 'asc' ? comparison : -comparison;
+            });
+        }
         
         renderTable(filteredData);
     }
 
     searchInput.addEventListener('input', applyFilters);
+
+    // Sorting functionality
+    let currentSortColumn = 'id';
+    let currentSortDirection = 'asc';
+
+    document.querySelectorAll('.sortable').forEach(header => {
+        header.addEventListener('click', () => {
+            const column = header.getAttribute('data-sort');
+            
+            if (currentSortColumn === column) {
+                // Toggle direction
+                currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortColumn = column;
+                currentSortDirection = 'asc';
+            }
+
+            // Update UI
+            document.querySelectorAll('.sortable').forEach(h => {
+                h.classList.remove('asc', 'desc');
+                h.querySelector('span').textContent = '↕';
+            });
+            
+            header.classList.add(currentSortDirection);
+            header.querySelector('span').textContent = currentSortDirection === 'asc' ? '↑' : '↓';
+
+            applyFilters();
+        });
+    });
 });
