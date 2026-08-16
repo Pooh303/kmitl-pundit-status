@@ -42,7 +42,7 @@ def scrape_students():
         fields = {
             'faculty_name': 'คณะเทคโนโลยีสารสนเทศ',
             'status': '<< ทั้งหมด >>',
-            'level': '1', # ปริญญาตรี
+            'level': '0', # ทุกระดับชั้น
             'token': token,
             'Submit': 'ค้นหา'
         }

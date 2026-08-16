@@ -71,8 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             
             let statusClass = '';
+            let statusHtml = student.status;
             if (student.status.includes('ยังไม่ขึ้นทะเบียน')) {
                 statusClass = 'status-not-registered';
+                statusHtml = `<a href="https://www1.reg.kmitl.ac.th/gradapundit/login.php" target="_blank" class="status-link" title="คลิกเพื่อไปยังหน้าขึ้นทะเบียน">${student.status} ↗</a>`;
             } else if (student.status.includes('ยังไม่ชำระเงิน')) {
                 statusClass = 'status-unpaid';
             } else if (student.status.includes('ไม่พบข้อมูล') || student.status === '-') {
@@ -82,10 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             tr.innerHTML = `
-                <td>${student.id}</td>
-                <td>${student.name}</td>
-                <td>${student.major || '-'}</td>
-                <td class="${statusClass}">${student.status}</td>
+                <td data-label="รหัสนักศึกษา">${student.id}</td>
+                <td data-label="ชื่อ-สกุล">${student.name}</td>
+                <td data-label="สาขา">${student.major || '-'}</td>
+                <td data-label="สถานะ" class="${statusClass}">${statusHtml}</td>
             `;
             tableBody.appendChild(tr);
         });
