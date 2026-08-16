@@ -249,4 +249,31 @@ document.addEventListener('DOMContentLoaded', () => {
             behavior: 'smooth'
         });
     });
+
+    // Countdown Timer
+    const deadline = new Date('2026-09-30T23:59:59+07:00');
+    const countdownTimer = document.getElementById('countdownTimer');
+    const countdownBanner = document.getElementById('countdownBanner');
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = deadline - now;
+
+        if (diff <= 0) {
+            countdownTimer.textContent = 'หมดเขตแล้ว';
+            countdownBanner.classList.add('expired');
+            document.querySelector('.countdown-label').style.display = 'none';
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdownTimer.textContent = `${days} วัน ${hours} ชม. ${minutes} นาที ${seconds} วินาที`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 });
