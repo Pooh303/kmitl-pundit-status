@@ -22,6 +22,36 @@ def map_major(thai_major):
         return 'IT'
     return thai_major
 
+def mask_name(full_name):
+    # ตัดคำนำหน้าทั้งไทยและอังกฤษที่อยู่ต้นประโยค
+    name = re.sub(r'^(นางสาว|นาย|นาง|Mr\.|Miss|Ms\.|MR\.|MISS|MS\.)\s*', '', full_name, flags=re.IGNORECASE).strip()
+    
+    parts = name.split()
+    if len(parts) == 0:
+        return full_name
+    elif len(parts) == 1:
+        if len(parts[0]) > 3:
+            return parts[0][:3] + '***'
+        return parts[0]
+        
+    first_name = parts[0]
+    last_name = ' '.join(parts[1:])
+    
+    # นับเฉพาะตัวอักษรที่ไม่ใช่ช่องว่าง 3 ตัวแรกของนามสกุล
+    chars_kept = 0
+    masked_last = ""
+    for char in last_name:
+        if chars_kept < 3:
+            masked_last += char
+            if char.strip():
+                chars_kept += 1
+        else:
+            break
+            
+    masked_last += '***'
+    
+    return f"{first_name} {masked_last}"
+
 def scrape_students():
     url = 'https://www1.reg.kmitl.ac.th/gradapundit/pundit_status_show.php'
     cj = CookieJar()
@@ -88,7 +118,7 @@ def scrape_students():
                         if "ยังไม่พบ" not in student_id and student_id.isdigit():
                             results.append({
                                 "id": student_id,
-                                "name": name,
+                                "name": mask_name(name),
                                 "major": map_major(major),
                                 "status": status
                             })
