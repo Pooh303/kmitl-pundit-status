@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            tableBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:red;">ไม่สามารถโหลดข้อมูลได้ (หากเพิ่งสร้างเว็บ ต้องรอ GitHub Actions รันรอบแรกก่อน)</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">ไม่สามารถโหลดข้อมูลได้ (หากเพิ่งสร้างเว็บ ต้องรอ GitHub Actions รันรอบแรกก่อน)</td></tr>`;
         });
 
     // Render table
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
         
         if (data.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="3" style="text-align:center;">ไม่พบข้อมูล</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">ไม่พบข้อมูล</td></tr>`;
             return;
         }
 
@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusHtml = `<a href="https://www1.reg.kmitl.ac.th/gradapundit/login.php" target="_blank" class="status-link" title="คลิกเพื่อไปยังหน้าขึ้นทะเบียน">${student.status} ↗</a>`;
             } else if (student.status.includes('ยังไม่ชำระเงิน')) {
                 statusClass = 'status-unpaid';
+                statusHtml = `<a href="https://www1.reg.kmitl.ac.th/gradapundit/login.php" target="_blank" class="status-link" title="คลิกเพื่อไปยังหน้าชำระเงิน">รอชำระเงิน ↗</a>`;
             } else if (student.status.includes('ไม่พบข้อมูล') || student.status === '-') {
                 statusClass = 'status-not-found';
             } else {

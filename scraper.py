@@ -8,12 +8,18 @@ import sys
 import uuid
 
 def map_major(thai_major):
-    if 'เทคโนโลยีสารสนเทศ' in thai_major:
-        return 'IT'
-    elif 'วิทยาการข้อมูล' in thai_major:
+    if 'วิทยาการข้อมูล' in thai_major:
         return 'DSBA'
     elif 'Business Information' in thai_major:
         return 'BIT'
+    elif 'Information Technology' in thai_major and 'International' in thai_major:
+        return 'IT (Inter)'
+    elif 'ปัญญาประดิษฐ์เพื่อการวิเคราะห์เชิงธุรกิจ' in thai_major:
+        return 'AIBA'
+    elif 'เทคโนโลยีปัญญาประดิษฐ์' in thai_major or 'Artificial Intelligence Technology' in thai_major:
+        return 'AIT'
+    elif 'เทคโนโลยีสารสนเทศ' in thai_major:
+        return 'IT'
     return thai_major
 
 def scrape_students():
